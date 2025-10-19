@@ -1,0 +1,33 @@
+-- Create Users table
+let creatUser=CREATE TABLE if not exists users (
+    userid INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(20) NOT NULL,
+    firstname VARCHAR(20) NOT NULL,
+    lastname VARCHAR(20) NOT NULL,
+    email VARCHAR(40) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    PRIMARY KEY (userid)
+);
+
+-- Create Questions table
+let createQuestions=CREATE TABLE if not exists questions (
+    id INT NOT NULL AUTO_INCREMENT,
+    questionid VARCHAR(100) NOT NULL UNIQUE,
+    userid INT NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    tag VARCHAR(20),
+    PRIMARY KEY (id),
+    FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE
+);
+
+-- Create Answers table
+let createAnswers=CREATE TABLE if not exists answers (
+    answerid INT NOT NULL AUTO_INCREMENT,
+    userid INT NOT NULL,
+    questionid VARCHAR(100) NOT NULL,
+    answer VARCHAR(500) NOT NULL,
+    PRIMARY KEY (answerid),
+    FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE,
+    FOREIGN KEY (questionid) REFERENCES questions(questionid) ON DELETE CASCADE
+);
